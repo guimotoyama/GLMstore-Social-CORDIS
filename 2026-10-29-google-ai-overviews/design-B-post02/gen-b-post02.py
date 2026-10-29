@@ -69,7 +69,7 @@ def footer(n, total=8):
     return f'<img class="foot-logo" src="logo-glm.png"><span>{n:02d} / {total:02d}</span>'
 
 def meta(section):
-    return f'<div class="meta"><span>{section}</span><span>03 NOV 2026</span></div>'
+    return f'<div class="meta"><span>{section}</span></div>'
 
 S = []
 
