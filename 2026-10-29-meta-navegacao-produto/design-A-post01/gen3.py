@@ -108,7 +108,7 @@ S = []
 
 # 1 capa
 S.append(page(f"""
-  <div class="eyebrow">Meta Ads &middot; 28 out 2026</div>
+  <div class="eyebrow">Meta Ads</div>
   <h1 class="grad">A Meta mudou o caminho do seu <span class="red">clique</span></h1>
   <div class="rule"></div>
   <p class="lead">Se voc&ecirc; anuncia no Instagram, parte dos seus leads pode nunca chegar at&eacute; voc&ecirc;.</p>
@@ -181,9 +181,9 @@ S.append(page(f"""
 
 # 7 pixel
 S.append(page(f"""
-  <div class="eyebrow">12 de novembro</div>
+  <div class="eyebrow">O que muda no Pixel</div>
   <h2>O Meta Pixel tamb&eacute;m muda</h2>
-  <p class="lead">A partir de 12 de novembro, o Meta passa a contar convers&otilde;es no aparelho do cliente. Os relat&oacute;rios v&atilde;o mostrar mais vendas do que houve de verdade.</p>
+  <p class="lead">O Meta passa a contar convers&otilde;es no aparelho do cliente. Os relat&oacute;rios v&atilde;o mostrar mais vendas do que houve de verdade.</p>
   <div class="spacer"></div>
   <div class="toggle"><span class="sw"></span><span class="lbl">Medir convers&otilde;es no dispositivo</span><span class="st">Ligado por padr&atilde;o</span></div>
   <div class="mono" style="margin-top:26px">N&uacute;mero subindo n&atilde;o &eacute; campanha melhorando</div>
@@ -206,5 +206,7 @@ for i, s in enumerate(S, 1):
 # copia assets para a pasta de render
 import shutil
 for f in ["frame-a.png", "frame-b.png", "portrait.png", "logo-glm.png"]:
-    shutil.copy(os.path.join(BASE, f), os.path.join(OUT, f))
+    _p = os.path.join(BASE, f)
+    if os.path.exists(_p):
+        shutil.copy(_p, os.path.join(OUT, f))
 print(f"gerados {len(S)} slides em {OUT}")
