@@ -14,6 +14,22 @@ Conteúdo social gerado por **GLM CORDIS** (Córdis) — Core Operational Resolv
     ├── icons/                                # Ícones Lucide + WhatsApp (SVG)
     ├── frame-a.png, frame-b.png              # Frames do vídeo do site
     └── logo-glm.png                          # Logo GLM (branco)
+
+2026-10-29-google-ai-overviews/              # POST 02 — Google AI Overviews (Direção B)
+├── slide-01.png ... slide-08.png             # Carrossel final (1080×1350)
+├── legenda-e-roteiro.md                      # Legenda + roteiro dos slides
+└── design-B-post02/                          # DIREÇÃO B (versão B deste post)
+    ├── gen-b-post02.py                       # Gerador HTML → Chrome headless → PNG
+    ├── html/s01.html ... s08.html            # HTMLs individuais dos slides
+    ├── icons/                                # Ícones Lucide + WhatsApp (SVG)
+    ├── frame-a.png, frame-b.png              # Frames do vídeo do site
+    └── logo-glm.png                          # Logo GLM (branco)
+
+2026-11-04-google-ads-performance-max/       # POST 03 — Google Ads: Performance Max (Direção híbrida C+B)
+├── slide-01.png ... slide-08.png             # Carrossel final (1080×1350)
+├── s01.html ... s08.html                     # HTMLs individuais dos slides
+├── legenda-e-roteiro.md                      # Legenda + roteiro dos slides
+└── logo-glm.png                              # Logo GLM (branco) usada no footer
 ```
 
 ## NÃO existe template fixo
@@ -34,9 +50,12 @@ Fundo escuro com textura do vídeo do site, cards com brilho sutil, ícones Luci
 
 ## Direções em produção
 - **A** — `design-A-post01/` (Post 01, publicado)
-- **B** — Swiss claro / brutalista (type gigante, grid racional, zero decoração)
-- **C** — Editorial Press / jornal (papel, mono para metadados, número gigante)
+- **B** — Swiss claro / brutalista (type gigante, grid racional, zero decoração) — Post 02 publicado
+- **C** — Editorial Press / jornal (papel, mono para metadados, número gigante) — capa do Post 03
 - **D** — Foto + texto editorial (fotografia real, corte editorial, anti-AI-slop)
+
+### Post 03 — Google Ads: Performance Max (híbrido C+B)
+Capa no estilo **C** (masthead editorial, sem número gigante) + slides internos no estilo **B** (Swiss claro, lista numerada + chip), aprovado pelo Gui em 04/11/2026. Footer igual ao dos posts publicados (logo 50px à esquerda + `NN / 08` à direita). Fonte citada no post: Search Engine Roundtable.
 
 ## Workflow
 
