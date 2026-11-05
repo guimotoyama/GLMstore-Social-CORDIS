@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<title>slide-01</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=B612+Mono&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{background:#000;}
+body{font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;}
+
+.slide{
+  position:relative;width:1080px;height:1350px;overflow:hidden;
+  background:#0f0f0f;padding:92px 78px 0;
+  display:flex;flex-direction:column;
+}
+
+/* malha cartografica de fundo */
+.mesh{position:absolute;inset:0;z-index:0;opacity:.5;}
+.mesh svg{width:100%;height:100%;display:block;}
+
+/* textura de video <= .038 */
+.bgimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  opacity:.034;mix-blend-mode:lighten;z-index:1;}
+
+/* glow <= .20 */
+.glow{position:absolute;border-radius:50%;filter:blur(120px);z-index:1;pointer-events:none;}
+
+.layer{position:relative;z-index:3;display:flex;flex-direction:column;flex:1;min-height:0;padding-bottom:190px;}
+.spacer{flex:1;}
+
+/* tipografia */
+.eyebrow{font-family:'B612 Mono',monospace;font-size:21px;letter-spacing:.20em;
+  text-transform:uppercase;color:#ca3e47;display:flex;align-items:center;gap:16px;}
+.eyebrow::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(202,62,71,.55),transparent);}
+
+h1{font-family:'Space Grotesk',sans-serif;font-weight:700;color:#f5eded;
+  font-size:92px;line-height:.98;letter-spacing:-.025em;}
+h2{font-family:'Space Grotesk',sans-serif;font-weight:700;color:#f5eded;
+  font-size:74px;line-height:1.02;letter-spacing:-.022em;}
+h3{font-family:'Space Grotesk',sans-serif;font-weight:500;color:#f5eded;
+  font-size:44px;line-height:1.14;letter-spacing:-.012em;}
+p{font-family:'Inter',sans-serif;color:#d2d2d2;font-size:29px;line-height:1.52;font-weight:400;}
+.lead{font-size:31px;color:#d2d2d2;}
+.mono{font-family:'B612 Mono',monospace;}
+
+.grad{background:linear-gradient(96deg,#f5eded 8%,#ca3e47 96%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.acc{color:#ca3e47;}
+
+/* capa */
+.cover-h{font-family:'Space Grotesk',sans-serif;font-weight:700;color:#f5eded;
+  font-size:104px;line-height:.95;letter-spacing:-.03em;}
+.cover-sub{font-family:'Inter',sans-serif;color:#d2d2d2;font-size:31px;line-height:1.45;max-width:760px;}
+.pinrow{display:flex;align-items:flex-end;gap:26px;height:120px;}
+.pinrow svg{display:block;}
+.route{position:absolute;z-index:2;pointer-events:none;}
+
+/* numeros giant */
+.giant{font-family:'Space Grotesk',sans-serif;font-weight:700;color:#ca3e47;
+  font-size:186px;line-height:.86;letter-spacing:-.04em;}
+
+/* barra de progresso */
+.prog{height:3px;background:rgba(210,210,210,.13);position:relative;overflow:hidden;}
+.prog i{position:absolute;left:0;top:0;bottom:0;background:#ca3e47;}
+
+/* listas numeradas */
+.numlist{display:flex;flex-direction:column;gap:26px;}
+.numrow{display:flex;gap:22px;align-items:flex-start;}
+.numrow .n{font-family:'B612 Mono',monospace;color:#ca3e47;font-size:30px;
+  line-height:1.15;flex:0 0 auto;padding-top:4px;}
+.numrow .t{font-family:'Space Grotesk',sans-serif;color:#f5eded;font-size:37px;
+  font-weight:500;line-height:1.2;}
+.numrow .d{font-family:'Inter',sans-serif;color:#d2d2d2;font-size:25px;line-height:1.45;margin-top:7px;}
+
+/* trilho vertical */
+.trilho{display:flex;flex-direction:column;gap:30px;position:relative;padding-left:46px;}
+.trilho::before{content:"";position:absolute;left:11px;top:14px;bottom:14px;width:2px;
+  background:linear-gradient(180deg,#ca3e47,rgba(202,62,71,.12));}
+.trilho .dot{position:absolute;left:0;top:6px;width:24px;height:24px;border-radius:50%;
+  border:2px solid #ca3e47;background:#0f0f0f;}
+.trilho .dot.f{background:#ca3e47;box-shadow:0 0 0 7px rgba(202,62,71,.14);}
+
+/* cards */
+.card{border:1px solid rgba(210,210,210,.14);border-radius:20px;padding:30px 30px 32px;
+  background:linear-gradient(160deg,rgba(245,237,237,.045),rgba(245,237,237,.012));}
+.card .lab{font-family:'B612 Mono',monospace;font-size:19px;letter-spacing:.16em;
+  text-transform:uppercase;color:#ca3e47;}
+.card .ttl{font-family:'Space Grotesk',sans-serif;font-weight:500;color:#f5eded;
+  font-size:38px;line-height:1.14;margin-top:12px;}
+.card .bd{font-family:'Inter',sans-serif;color:#d2d2d2;font-size:24px;line-height:1.44;margin-top:10px;}
+
+/* stat */
+.stat{display:flex;align-items:baseline;gap:20px;}
+.stat .v{font-family:'Space Grotesk',sans-serif;font-weight:700;color:#ca3e47;
+  font-size:80px;line-height:1;letter-spacing:-.03em;}
+.stat .k{font-family:'Inter',sans-serif;color:#d2d2d2;font-size:26px;line-height:1.35;max-width:520px;}
+
+.src{font-family:'B612 Mono',monospace;font-size:17px;color:rgba(210,210,210,.42);letter-spacing:.05em;}
+
+/* CTA */
+.cta-pill{display:inline-flex;align-items:center;gap:14px;align-self:flex-start;
+  background:#ca3e47;color:#f5eded;border-radius:999px;padding:24px 42px;
+  font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:33px;}
+.wa{display:flex;align-items:center;gap:16px;color:#f5eded;}
+.wa svg{fill:#ca3e47;display:block;}
+.wa .num{font-family:'Space Grotesk',sans-serif;font-size:38px;font-weight:500;letter-spacing:.01em;}
+.wa .lbl{font-family:'B612 Mono',monospace;font-size:17px;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(210,210,210,.55);margin-bottom:3px;}
+
+/* footer + swipe: IRMAOS de .layer */
+.footer{position:absolute;left:78px;right:78px;bottom:74px;z-index:5;
+  display:flex;justify-content:space-between;align-items:center;}
+.footer img{height:50px;display:block;}
+.footer .pg{font-family:'B612 Mono',monospace;font-size:22px;color:rgba(210,210,210,.5);letter-spacing:.08em;}
+.swipe{position:absolute;left:78px;right:78px;bottom:132px;z-index:5;
+  display:flex;align-items:center;gap:14px;
+  font-family:'B612 Mono',monospace;font-size:20px;letter-spacing:.18em;
+  text-transform:uppercase;color:rgba(210,210,210,.6);}
+.swipe svg{stroke:#ca3e47;}
+
+/* ghost icon */
+.ghost{position:absolute;z-index:2;pointer-events:none;opacity:.05;}
+
+
+</style></head>
+<body>
+<div class="slide">
+  <div class="mesh"><svg viewBox="0 0 1080 1350" preserveAspectRatio="none"><line x1="-20" y1="0" x2="1100" y2="0" stroke="#d2d2d2" stroke-width="1.1" opacity="0.5"/><line x1="-20" y1="96" x2="1100" y2="96" stroke="#d2d2d2" stroke-width="0.7" opacity="0.28"/><line x1="-20" y1="192" x2="1100" y2="192" stroke="#d2d2d2" stroke-width="0.7" opacity="0.28"/><line x1="-20" y1="288" x2="1100" y2="288" stroke="#d2d2d2" stroke-width="1.1" opacity="0.5"/><line x1="-20" y1="384" x2="1100" y2="384" stroke="#d2d2d2" stroke-width="0.7" opacity="0.28"/><line x1="-20" y1="480" x2="1100" y2="480" stroke="#d2d2d2" stroke-width="0.7" opacity="0.28"/><line x1="-20" y1="576" x2="1100" y2="576" stroke="#d2d2d2" stroke-width="1.1" opacity="0.5"/><line x1="-20" y1="672" x2="1100" y2="672" stroke="#d2d2d2" stroke-width="0.7" opacity="0.28"/><line x1="-20" y1="768" x2="1100" y2="768" stroke="#d2d2d2" stroke-width="0.7" opacity="0.28"/><line x1="-20" y1="864" x2="1100" y2="864" stroke="#d2d2d2" stroke-width="1.1" opacity="0.5"/><line x1="-20" y1="960" x2="1100" y2="960" stroke="#d2d2d2" stroke-width="0.7" opacity="0.28"/><line x1="-20" y1="1056" x2="1100" y2="1056" stroke="#d2d2d2" stroke-width="0.7" opacity="0.28"/><line x1="-20" y1="1152" x2="1100" y2="1152" stroke="#d2d2d2" stroke-width="1.1" opacity="0.5"/><line x1="-20" y1="1248" x2="1100" y2="1248" stroke="#d2d2d2" stroke-width="0.7" opacity="0.28"/><line x1="-20" y1="1344" x2="1100" y2="1344" stroke="#d2d2d2" stroke-width="0.7" opacity="0.28"/><line x1="0" y1="-20" x2="0" y2="1370" stroke="#d2d2d2" stroke-width="1.1" opacity="0.45"/><line x1="118" y1="-20" x2="118" y2="1370" stroke="#d2d2d2" stroke-width="0.7" opacity="0.25"/><line x1="236" y1="-20" x2="236" y2="1370" stroke="#d2d2d2" stroke-width="0.7" opacity="0.25"/><line x1="354" y1="-20" x2="354" y2="1370" stroke="#d2d2d2" stroke-width="0.7" opacity="0.25"/><line x1="472" y1="-20" x2="472" y2="1370" stroke="#d2d2d2" stroke-width="1.1" opacity="0.45"/><line x1="590" y1="-20" x2="590" y2="1370" stroke="#d2d2d2" stroke-width="0.7" opacity="0.25"/><line x1="708" y1="-20" x2="708" y2="1370" stroke="#d2d2d2" stroke-width="0.7" opacity="0.25"/><line x1="826" y1="-20" x2="826" y2="1370" stroke="#d2d2d2" stroke-width="0.7" opacity="0.25"/><line x1="944" y1="-20" x2="944" y2="1370" stroke="#d2d2d2" stroke-width="1.1" opacity="0.45"/><line x1="1062" y1="-20" x2="1062" y2="1370" stroke="#d2d2d2" stroke-width="0.7" opacity="0.25"/><line x1="-20" y1="1120" x2="1100" y2="300" stroke="#ca3e47" stroke-width="1.6" opacity="0.22"/><line x1="-20" y1="1180" x2="1100" y2="360" stroke="#d2d2d2" stroke-width="0.9" opacity="0.2"/></svg></div>
+  <img class="bgimg" src="frame-a.png" alt="">
+  
+<div class="glow" style="width:760px;height:760px;right:-220px;top:-200px;
+  background:radial-gradient(circle,rgba(202,62,71,.18),transparent 62%);"></div>
+<div class="layer" style="padding-bottom:0;">
+  <div class="spacer"></div>
+  <div class="eyebrow">Google · Perfil da Empresa</div>
+  <div style="height:44px"></div>
+  <div class="cover-h">O cliente<br>procurou.<br><span class="grad">Não achou você.</span></div>
+  <div style="height:36px"></div>
+  <div class="cover-sub">A busca local não depende de post.<br>Depende da sua ficha no Google.</div>
+  <div style="height:52px"></div>
+  <div class="pinrow">
+    <svg class="pin" viewBox="0 0 24 24" width="86" height="86" style="opacity:0.3" fill="none" stroke="#f5eded" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3" fill="#f5eded"/></svg>
+    <svg class="pin" viewBox="0 0 24 24" width="64" height="64" style="opacity:0.18" fill="none" stroke="#f5eded" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3" fill="#f5eded"/></svg>
+    <svg class="pin" viewBox="0 0 24 24" width="112" height="112" style="opacity:1.0" fill="#ca3e47" stroke="#ca3e47" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3" fill="#0f0f0f"/></svg>
+    <svg class="pin" viewBox="0 0 24 24" width="50" height="50" style="opacity:0.14" fill="none" stroke="#f5eded" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3" fill="#f5eded"/></svg>
+  </div>
+  <div class="spacer"></div>
+</div>
+<div class="swipe"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="none" stroke="#ca3e47" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M5 12h14m-7-7l7 7l-7 7"/></svg><span>Arraste</span></div>
+
+  <div class="footer">
+  <img src="logo-glm.png" alt="GLM">
+  <span class="pg">01 / 08</span>
+</div>
+</div>
+</body></html>
