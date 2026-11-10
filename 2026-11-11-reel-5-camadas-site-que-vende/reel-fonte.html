@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<style>
+@font-face{font-family:'SpaceGrotesk';src:url('fonts/SpaceGrotesk-700.woff2') format('woff2');font-weight:700}
+@font-face{font-family:'SpaceGrotesk';src:url('fonts/SpaceGrotesk-600.woff2') format('woff2');font-weight:600}
+@font-face{font-family:'SpaceGrotesk';src:url('fonts/SpaceGrotesk-500.woff2') format('woff2');font-weight:500}
+@font-face{font-family:'Inter';src:url('fonts/Inter-400.woff2') format('woff2');font-weight:400}
+@font-face{font-family:'Inter';src:url('fonts/Inter-500.woff2') format('woff2');font-weight:500}
+@font-face{font-family:'Inter';src:url('fonts/Inter-600.woff2') format('woff2');font-weight:600}
+@font-face{font-family:'B612Mono';src:url('fonts/B612Mono-400.woff2') format('woff2');font-weight:400}
+@font-face{font-family:'B612Mono';src:url('fonts/B612Mono-700.woff2') format('woff2');font-weight:700}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+body{font-family:'Inter',sans-serif;color:#d2d2d2;-webkit-font-smoothing:antialiased}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:#0a0a0a}
+
+/* ---------- desk / studio ---------- */
+.desk{position:absolute;inset:0;background:
+  radial-gradient(120% 70% at 50% 44%, #1c1a19 0%, #121110 42%, #0a0a0a 72%, #060606 100%);}
+.desk-grain{position:absolute;inset:0;opacity:.05;background-image:
+  repeating-linear-gradient(115deg, rgba(255,255,255,.10) 0 1px, transparent 1px 4px);}
+.vignette{position:absolute;inset:0;background:radial-gradient(120% 85% at 50% 45%, transparent 40%, rgba(0,0,0,.72) 100%)}
+
+/* ---------- screen glow spill ---------- */
+.spill{position:absolute;left:50%;top:44%;width:1500px;height:1100px;transform:translate(-50%,-50%);
+  background:radial-gradient(ellipse at center, rgba(197,164,112,.20) 0%, rgba(197,164,112,.07) 34%, transparent 66%);
+  filter:blur(50px);opacity:0}
+.spill-red{position:absolute;left:50%;top:30%;width:1200px;height:700px;transform:translate(-50%,-50%);
+  background:radial-gradient(ellipse at center, rgba(202,62,71,.22) 0%, transparent 62%);filter:blur(70px);opacity:0}
+
+/* ---------- scene ---------- */
+.scene{position:absolute;left:50%;top:0;width:1080px;height:1920px;transform-origin:50% 44%;
+  transform-style:preserve-3d;perspective:1600px;perspective-origin:50% 44%}
+.laptop{position:absolute;left:50%;top:420px;transform:translateX(-50%);transform-style:preserve-3d}
+
+.lid{position:relative;width:1060px;height:730px;border-radius:24px 24px 12px 12px;
+  background:linear-gradient(160deg,#2a2a2c,#131315 60%,#0c0c0d);
+  padding:24px 24px 28px;box-shadow:0 50px 110px rgba(0,0,0,.75), 0 0 0 1px rgba(255,255,255,.07) inset;
+  transform:rotateX(7deg) rotateY(-8deg);transform-style:preserve-3d}
+.bezel{position:relative;width:1012px;height:678px;border-radius:10px;overflow:hidden;background:#000;
+  box-shadow:0 0 0 1px rgba(255,255,255,.05)}
+
+/* browser chrome */
+.browser{position:absolute;inset:0;background:#0b0d10;display:flex;flex-direction:column}
+.bbar{height:46px;flex:0 0 46px;background:linear-gradient(#1a1d21,#141619);display:flex;align-items:center;
+  padding:0 16px;gap:9px;border-bottom:1px solid rgba(255,255,255,.07)}
+.dot{width:11px;height:11px;border-radius:50%}
+.d1{background:#ff5f57}.d2{background:#febc2e}.d3{background:#28c840}
+.url{flex:1;height:27px;margin-left:12px;background:#0b0d10;border-radius:14px;display:flex;align-items:center;
+  padding:0 14px;gap:9px;font-family:'B612Mono',monospace;font-size:14px;color:#8b929b;letter-spacing:.02em}
+.lock{width:11px;height:13px;border-radius:2px;background:#4ade80;opacity:.8}
+.viewport{position:relative;flex:1;overflow:hidden;background:#03080C}
+.viewport video{position:absolute;left:0;top:0;width:1012px;height:632px;object-fit:cover;object-position:top center}
+
+/* laptop base */
+.base{position:relative;width:1170px;height:76px;margin-left:-55px;margin-top:-12px;
+  background:linear-gradient(#2c2c2e,#151517 55%,#0b0b0c);
+  border-radius:6px 6px 18px 18px;transform:rotateX(62deg) rotateY(-8deg);transform-origin:top center;
+  box-shadow:0 26px 60px rgba(0,0,0,.7)}
+.pad{position:absolute;left:50%;top:8px;transform:translateX(-50%);width:420px;height:48px;border-radius:6px;
+  background:linear-gradient(#202023,#171719);box-shadow:0 0 0 1px rgba(255,255,255,.04)}
+.nub{position:absolute;left:50%;bottom:5px;transform:translateX(-50%);width:160px;height:5px;border-radius:3px;background:#0a0a0b}
+
+/* reflection */
+.reflection{position:absolute;left:50%;top:1130px;width:1060px;height:730px;transform:translateX(-50%) scaleY(-1);
+  transform-origin:top center;opacity:.12;filter:blur(10px);
+  -webkit-mask-image:linear-gradient(to bottom, rgba(0,0,0,.85), transparent 72%);
+  mask-image:linear-gradient(to bottom, rgba(0,0,0,.85), transparent 72%)}
+.reflection img{width:100%;height:100%;object-fit:cover;object-position:top center}
+
+/* ---------- HUD ---------- */
+.hud{position:absolute;inset:0;z-index:5}
+.kicker{position:absolute;left:70px;top:96px;font-family:'B612Mono',monospace;font-size:19px;letter-spacing:.20em;
+  text-transform:uppercase;color:#ca3e47;display:flex;align-items:center;gap:14px;opacity:0}
+.kicker::after{content:'';width:170px;height:1px;background:#ca3e47;opacity:.55}
+.counter{position:absolute;right:70px;top:96px;font-family:'B612Mono',monospace;font-size:19px;letter-spacing:.16em;color:#6f6f6f;opacity:0}
+.counter b{color:#f5eded;font-weight:700}
+
+.headline{position:absolute;left:70px;top:150px;right:70px;font-family:'SpaceGrotesk',sans-serif;font-weight:700;
+  font-size:74px;line-height:1.03;color:#f5eded;opacity:0;letter-spacing:-.02em}
+.headline .hl{color:#ca3e47}
+.headline small{display:block;font-family:'Inter',sans-serif;font-weight:400;font-size:29px;line-height:1.32;
+  color:#9b9b9b;margin-top:22px;letter-spacing:0}
+
+/* layer card */
+.card{position:absolute;left:70px;right:70px;top:1290px;opacity:0}
+.card-top{display:flex;align-items:center;gap:18px;margin-bottom:20px}
+.card-num{font-family:'B612Mono',monospace;font-size:26px;font-weight:700;color:#ca3e47;letter-spacing:.06em}
+.card-ico{width:58px;height:58px;border-radius:14px;background:rgba(202,62,71,.12);border:1px solid rgba(202,62,71,.42);
+  display:flex;align-items:center;justify-content:center;color:#ca3e47;flex:0 0 58px}
+.card-ico svg{width:30px;height:30px}
+.card-title{font-family:'SpaceGrotesk',sans-serif;font-weight:600;font-size:44px;color:#f5eded;letter-spacing:-.01em}
+.card-desc{font-size:27px;line-height:1.42;color:#d2d2d2;max-width:860px}
+.card-desc b{color:#f5eded;font-weight:600}
+
+/* summary stack */
+.summary{position:absolute;left:70px;right:70px;top:1150px;opacity:0}
+.sum-scrim{position:absolute;left:0;right:0;top:1080px;height:560px;background:linear-gradient(180deg,rgba(6,6,6,0) 0%,rgba(6,6,6,.86) 14%,rgba(6,6,6,.94) 50%,rgba(6,6,6,.88) 86%,rgba(6,6,6,0) 100%);opacity:0}
+.sum-item{display:flex;align-items:center;gap:18px;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.09)}
+.sum-item span:first-child{font-family:'B612Mono',monospace;font-size:20px;font-weight:700;color:#ca3e47;width:42px}
+.sum-item span:nth-child(2){font-family:'SpaceGrotesk',sans-serif;font-weight:600;font-size:34px;color:#f5eded;flex:1}
+.sum-item span:last-child{font-family:'Inter',sans-serif;font-size:21px;color:#6f6f6f;text-align:right;max-width:300px}
+
+/* bottom brand bar (layer beats) */
+.brandbar{position:absolute;left:70px;right:70px;bottom:74px;display:flex;align-items:center;justify-content:space-between;opacity:0}
+.brandbar img{height:42px}
+.brandbar span{font-family:'B612Mono',monospace;font-size:20px;letter-spacing:.10em;color:#6f6f6f}
+
+/* end card */
+.end{position:absolute;inset:0;opacity:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.end-logo{height:92px;margin-bottom:44px}
+.end h3{font-family:'SpaceGrotesk',sans-serif;font-weight:700;font-size:76px;color:#f5eded;line-height:1.05;letter-spacing:-.02em}
+.end h3 span{color:#ca3e47}
+.end p{font-size:29px;color:#9b9b9b;margin-top:22px;max-width:760px;line-height:1.4}
+.wa{display:inline-flex;align-items:center;gap:14px;margin-top:48px;padding:22px 40px;background:#ca3e47;
+  border-radius:14px;color:#f5eded;font-family:'SpaceGrotesk',sans-serif;font-weight:600;font-size:31px}
+.wa svg{width:30px;height:30px}
+.end-site{font-family:'B612Mono',monospace;font-size:22px;color:#6f6f6f;margin-top:26px;letter-spacing:.03em}
+
+/* progress */
+.progress{position:absolute;left:0;bottom:0;height:5px;background:#ca3e47;width:0;z-index:9}
+
+/* grain overlay */
+.grain{position:absolute;inset:0;z-index:8;pointer-events:none;opacity:.035;background-image:
+  radial-gradient(rgba(255,255,255,.9) .5px, transparent .5px);background-size:3px 3px}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="desk"></div>
+  <div class="desk-grain"></div>
+  <div class="spill" id="spill"></div>
+  <div class="spill-red" id="spillRed"></div>
+
+  <div class="scene" id="scene">
+    <div class="laptop">
+      <div class="lid">
+        <div class="bezel">
+          <div class="browser">
+            <div class="bbar">
+              <div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div>
+              <div class="url"><span class="lock"></span>guimotoyama.github.io/LP-Advogados</div>
+            </div>
+            <div class="viewport" id="viewport"><video id="siteVid" src="site-scroll.mp4" muted playsinline preload="auto"></video></div>
+          </div>
+        </div>
+      </div>
+      <div class="base"><div class="pad"></div><div class="nub"></div></div>
+    </div>
+  </div>
+
+  <div class="reflection" id="reflection"><img id="reflImg"></div>
+
+  <div class="hud">
+    <div class="kicker" id="kicker">o que um site precisa ter</div>
+    <div class="counter" id="counter"><b>0</b> / 5</div>
+    <div class="headline" id="headline">
+      5 coisas que fazem<br>um site <span class="hl">vender</span>
+      <small>o site do seu negócio tem todas?</small>
+    </div>
+
+    <div class="card" id="card">
+      <div class="card-top">
+        <span class="card-num" id="cardNum">01</span>
+        <span class="card-ico" id="cardIco"></span>
+        <span class="card-title" id="cardTitle"></span>
+      </div>
+      <div class="card-desc" id="cardDesc"></div>
+    </div>
+
+    <div class="sum-scrim" id="sumScrim"></div>
+    <div class="summary" id="summary">
+      <div class="sum-item"><span>01</span><span>Primeira impressão</span><span>o cliente decide em 3s</span></div>
+      <div class="sum-item"><span>02</span><span>Prova</span><span>dois decades de casos</span></div>
+      <div class="sum-item"><span>03</span><span>Diferencial</span><span>por que você e não ele</span></div>
+      <div class="sum-item"><span>04</span><span>Confiança</span><span>o que os clientes dizem</span></div>
+      <div class="sum-item"><span>05</span><span>Clareza</span><span>o próximo passo visível</span></div>
+    </div>
+
+    <div class="brandbar" id="brandbar">
+      <img src="logo-glm.png" alt="GLM">
+      <span>@agencia_glmstore</span>
+    </div>
+
+    <div class="end" id="end">
+      <img class="end-logo" src="logo-glm.png" alt="GLM">
+      <h3>Seu site pode<br><span>vender</span> mais.</h3>
+      <p>Fale com a gente e veja o que falta no seu.</p>
+      <div class="wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>(11) 98984-2541</div>
+      <div class="end-site">agencia.glmstore.com.br</div>
+    </div>
+  </div>
+
+  <div class="progress" id="progress"></div>
+  <div class="vignette"></div>
+  <div class="grain"></div>
+</div>
+
+<script>
+const FPS = 25, DUR = 31.0;
+const VIDEO_DUR = 22.88;
+
+const ICONS = {
+  eye: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>',
+  badge: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>',
+  target: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',
+  star: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.12 2.12 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.12 2.12 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.12 2.12 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.12 2.12 0 0 0-.611-1.879L2.16 9.775a.53.53 0 0 1 .294-.906l5.165-.755a2.12 2.12 0 0 0 1.597-1.16z"/></svg>',
+  cursor: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 9 5 12 1.8-5.2L21 14Z"/><path d="M7.2 2.2 8 5.1"/><path d="m5.1 8-2.9-.8"/><path d="m14 4.1 1-2.9"/><path d="m6 12-1.9 1"/></svg>'
+};
+
+// Each layer is pinned to a real section of the recorded continuous scroll.
+// Measured on the recording: hero 0-3.5s | justitia 4-7.5s | arvore 8-13s |
+// estrelas 13.5-19s | formulario 19.5-22.9s
+const LAYERS = [
+  { num:'01', icon:'eye',    title:'Primeira impressão', desc:'O cliente decide em <b>3 segundos</b>. Sua primeira dobra precisa dizer o que você faz e para quem.',                t0:2.6,  t1:6.1 },
+  { num:'02', icon:'badge',  title:'Prova',              desc:'Dois decades protegendo o que mais importa. <b>Prova concreta</b> converte melhor que promessa bonita.',                                t0:6.1,  t1:10.1 },
+  { num:'03', icon:'target', title:'Diferencial',        desc:'Por que <b>você</b> e não o concorrente do outro lado da rua? Se o site não responde isso, ele não vende.',                  t0:10.1, t1:15.6 },
+  { num:'04', icon:'star',   title:'Confiança',          desc:'As estrelas de quem <b>já contracted</b>. Avaliação real vale mais que qualquer texto de venda.',                            t0:15.6, t1:21.1 },
+  { num:'05', icon:'cursor', title:'Clareza',            desc:'O próximo passo visível: <b>Agendar consultoria</b>. Sem botão claro, sem contato perdido.',                                         t0:21.1, t1:25.5 }
+];
+
+// Video time (s) for each reel time (s) — sections pinned to the recording
+const VIDEO_KEYS = [
+  [0.0, 0.0], [2.6, 0.0], [6.1, 3.5], [10.1, 7.5], [15.6, 13.0],
+  [21.1, 19.0], [25.5, VIDEO_DUR], [31.0, VIDEO_DUR]
+];
+
+// reflection uses a still frame of the site
+document.getElementById('reflImg').src = 'site-still.jpg';
+
+const $ = id => document.getElementById(id);
+const el = {
+  scene:$('scene'), spill:$('spill'), spillRed:$('spillRed'), reflection:$('reflection'),
+  kicker:$('kicker'), counter:$('counter'), headline:$('headline'),
+  card:$('card'), cardNum:$('cardNum'), cardIco:$('cardIco'), cardTitle:$('cardTitle'), cardDesc:$('cardDesc'),
+  summary:$('summary'), sumScrim:$('sumScrim'), brandbar:$('brandbar'),
+  end:$('end'), progress:$('progress'), vid:$('siteVid')
+};
+
+const clamp = (v,a,b) => Math.min(Math.max(v,a),b);
+const easeOut = x => 1 - Math.pow(1 - clamp(x,0,1), 3);
+const easeInOut = x => x < .5 ? 4*x*x*x : 1 - Math.pow(-2*x+2,3)/2;
+const seg = (t,t0,t1) => clamp((t-t0)/(t1-t0),0,1);
+
+function videoAt(t){
+  const K = VIDEO_KEYS;
+  for (let i=0;i<K.length-1;i++){
+    const [ta,va]=K[i], [tb,vb]=K[i+1];
+    if (t>=ta && t<=tb) return va + (vb-va)*easeInOut(seg(t,ta,tb));
+  }
+  return VIDEO_DUR;
+}
+
+window.renderFrame = function(t){
+  const p = t / DUR;
+
+  // ---- end card timing computed first (drives kicker/counter fade-out) ----
+  const endIn = easeOut(seg(t,27.5,28.7));
+
+  // ---- headline / kicker ----
+  const hookIn  = easeOut(seg(t,0.10,0.70));
+  const hookOut = easeOut(seg(t,1.80,2.30));
+  el.headline.style.opacity = hookIn * (1-hookOut);
+  el.headline.style.transform = `translateY(${(1-hookIn)*46 - hookOut*30}px)`;
+
+  // ---- scene reveal (big ghost pose during hook -> pulls back to reveal site) ----
+  const sceneIn = easeOut(seg(t,1.60,2.60));
+  const endOut  = easeOut(seg(t,27.1,28.1));
+  const camPush = easeOut(seg(t,2.6,25.5));
+  const hookPose = 1 - easeOut(seg(t,1.05,2.75));
+  const baseScale = 0.93 + 0.07*easeOut(seg(t,1.60,3.20));
+  const scale = (baseScale + hookPose*0.52) * (1 + 0.030*camPush) * (1 - 0.12*easeOut(seg(t,25.5,27.5)));
+  const ty = hookPose*300 + easeOut(seg(t,25.5,27.5))*50 - endOut*130;
+  const rx = 7 - 2*camPush + endOut*6, ry = -8 + 2*camPush - endOut*4;
+  el.scene.style.opacity = (0.26 + 0.74*sceneIn) * (1-endOut);
+  el.scene.style.transform = `translateX(-50%) translateY(${ty}px) scale(${scale}) rotateX(${rx}deg) rotateY(${ry}deg)`;
+  el.spill.style.opacity = (0.20 + 0.70*sceneIn)*(1-endOut)*0.9;
+  el.spillRed.style.opacity = sceneIn*(1-endOut)*0.5;
+  el.reflection.style.opacity = 0.13*sceneIn*(1-endOut);
+
+  // ---- site video inside the screen ----
+  const vt = videoAt(t);
+  if (Math.abs(el.vid.currentTime - vt) > 0.02) {
+    el.vid.currentTime = vt;
+  }
+
+  // ---- layers ----
+  let active = -1;
+  for (let i=0;i<LAYERS.length;i++){ const L=LAYERS[i]; if (t>=L.t0-0.05) active=i; }
+  const chromeAlpha = (active>=0 ? easeOut(seg(t,2.0,2.6)) : hookIn*(1-hookOut)*.95) * (1-endIn);
+  el.counter.style.opacity = active>=0 ? chromeAlpha : 0;
+  el.counter.innerHTML = `<b>${active>=0 ? active+1 : 0}</b> / 5`;
+  el.kicker.textContent = active>=0 ? 'as 5 camadas de um site que vende' : 'o que um site precisa ter';
+  el.kicker.style.opacity = chromeAlpha;
+
+  const cardAlpha = active>=0
+    ? Math.min(easeOut(seg(t,LAYERS[active].t0,LAYERS[active].t0+0.42)),
+               1-easeOut(seg(t,LAYERS[active].t1-0.34,LAYERS[active].t1)))
+    : 0;
+  if (active>=0){
+    const L = LAYERS[active];
+    el.cardNum.textContent = L.num;
+    el.cardIco.innerHTML = ICONS[L.icon];
+    el.cardTitle.textContent = L.title;
+    el.cardDesc.innerHTML = L.desc;
+  }
+
+  // ---- summary ----
+  const sumIn  = easeOut(seg(t,25.5,26.2));
+  const sumOut = easeOut(seg(t,26.9,27.4));
+  el.sumScrim.style.opacity = sumIn*(1-sumOut);
+  el.summary.style.opacity = sumIn*(1-sumOut);
+  el.summary.style.transform = `translateY(${(1-sumIn)*40 - sumOut*40}px)`;
+  el.summary.querySelectorAll('.sum-item').forEach((row,i)=>{
+    const a = easeOut(seg(t,25.6+i*0.10,26.05+i*0.10));
+    row.style.opacity = a; row.style.transform=`translateX(${(1-a)*40}px)`;
+  });
+  const cardVisible = active>=0 ? Math.min(cardAlpha, 1-sumIn) : 0;
+  el.card.style.opacity = cardVisible;
+  el.card.style.transform = `translateY(${(1-cardVisible)*34}px)`;
+
+  // ---- bottom brand bar (layer beats only) ----
+  const bb = Math.min(easeOut(seg(t,2.6,3.3)), 1-sumIn) * (1-endIn);
+  el.brandbar.style.opacity = bb;
+
+  // ---- end card ----
+  el.end.style.opacity = endIn;
+  el.end.style.transform = `translateY(${(1-endIn)*40}px) scale(${0.96+0.04*endIn})`;
+
+  // ---- progress ----
+  el.progress.style.width = (p*100) + '%';
+
+  return vt;   // caller uses this to seek the video deterministically
+};
+</script>
+</body>
+</html>
