@@ -5,7 +5,7 @@ O site do advogado Ricardo Alencar tem 5 camadas que fazem ele vender.
 E o seu site, tem?
 
 01 PRIMEIRA IMPRESSÃO — o cliente decide em 3 segundos
-02 PROVA — dois decades protegendo o que mais importa
+02 PROVA — duas décadas protegendo o que mais importa
 03 DIFERENCIAL — por que você e não ele
 04 CONFIANÇA — o que os clientes dizem
 05 CLAREZA — o próximo passo visível
