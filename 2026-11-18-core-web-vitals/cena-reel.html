@@ -37,23 +37,23 @@ body{font-family:'Inter',sans-serif;color:#d2d2d2;-webkit-font-smoothing:antiali
 .scene{position:absolute;left:50%;top:0;width:1080px;height:1920px;transform-origin:50% 50%;
   transform-style:preserve-3d;perspective:1700px;perspective-origin:50% 50%}
 
-/* phone */
-.phone{position:absolute;left:50%;top:460px;transform:translateX(-50%);transform-style:preserve-3d}
+/* phone — moldura proporcional ao video mobile real (390x844) */
+.phone{position:absolute;left:50%;top:520px;transform:translateX(-50%);transform-style:preserve-3d}
 .rail{position:absolute;background:linear-gradient(#3a3a3e,#17171a);border-radius:4px}
-.rail.left{left:-6px;top:172px;width:6px;height:86px}
-.rail.left2{left:-6px;top:285px;width:6px;height:134px}
-.rail.right{right:-6px;top:228px;width:6px;height:172px}
-.frame{position:relative;width:452px;height:938px;border-radius:44px;
+.rail.left{left:-6px;top:150px;width:6px;height:76px}
+.rail.left2{left:-6px;top:250px;width:6px;height:118px}
+.rail.right{right:-6px;top:200px;width:6px;height:150px}
+.frame{position:relative;width:500px;height:1078px;border-radius:54px;
   background:linear-gradient(150deg,#333337,#131316 55%,#0b0b0d);
-  padding:18px;box-shadow:0 50px 100px rgba(0,0,0,.8), 0 0 0 1px rgba(255,255,255,.20) inset,
+  padding:20px;box-shadow:0 50px 100px rgba(0,0,0,.8), 0 0 0 1px rgba(255,255,255,.20) inset,
     0 0 0 1px rgba(0,0,0,.6), 0 0 90px rgba(202,62,71,.28);
   transform:rotateX(4deg) rotateY(-4deg);transform-style:preserve-3d}
-.screen{position:relative;width:416px;height:902px;border-radius:30px;overflow:hidden;background:#000;
+.screen{position:relative;width:460px;height:1038px;border-radius:38px;overflow:hidden;background:#000;
   box-shadow:0 0 0 1px rgba(255,255,255,.06)}
-.screen video{position:absolute;left:0;top:0;width:416px;height:902px;object-fit:cover;object-position:top center}
-.notch{position:absolute;left:50%;top:12px;transform:translateX(-50%);width:130px;height:26px;border-radius:13px;
+.screen video{position:absolute;left:0;top:0;width:460px;height:1038px;object-fit:cover;object-position:top center}
+.notch{position:absolute;left:50%;top:14px;transform:translateX(-50%);width:150px;height:30px;border-radius:15px;
   background:#000;z-index:3;box-shadow:0 0 0 1px rgba(255,255,255,.05)}
-.cam{position:absolute;left:50%;top:19px;transform:translateX(-50%);width:10px;height:10px;border-radius:50%;
+.cam{position:absolute;left:50%;top:22px;transform:translateX(-50%);width:11px;height:11px;border-radius:50%;
   background:#0d1117;z-index:4;box-shadow:0 0 0 2px rgba(255,255,255,.06)}
 
 /* ---------- HUD ---------- */
@@ -78,7 +78,7 @@ body{font-family:'Inter',sans-serif;color:#d2d2d2;-webkit-font-smoothing:antiali
   color:#c9c9c9;margin-top:22px;letter-spacing:0}
 
 /* code tag motif on cards */
-.card{position:absolute;left:70px;right:70px;top:1500px;opacity:0}
+.card{position:absolute;left:70px;right:70px;top:1620px;opacity:0}
 .card-top{display:flex;align-items:center;gap:18px;margin-bottom:14px}
 .card-num{font-family:'B612Mono',monospace;font-size:28px;font-weight:700;color:#ca3e47;letter-spacing:.06em}
 .card-tag{font-family:'B612Mono',monospace;font-size:24px;color:#9b9b9b;letter-spacing:.02em}
@@ -88,7 +88,7 @@ body{font-family:'Inter',sans-serif;color:#d2d2d2;-webkit-font-smoothing:antiali
 .card-desc b{color:#f5eded;font-weight:600}
 
 /* summary stack */
-.summary{position:absolute;left:70px;right:70px;top:1500px;opacity:0;
+.summary{position:absolute;left:70px;right:70px;top:1620px;opacity:0;
   background:linear-gradient(180deg, rgba(9,9,11,.92), rgba(9,9,11,.86));
   border:1px solid rgba(255,255,255,.10);border-radius:22px;padding:18px 28px;
   box-shadow:0 40px 90px rgba(0,0,0,.55)}
@@ -138,7 +138,7 @@ body{font-family:'Inter',sans-serif;color:#d2d2d2;-webkit-font-smoothing:antiali
       <div class="rail right"></div>
       <div class="frame">
         <div class="screen" id="screen">
-          <video id="siteVid" src="site-strip.mp4" muted playsinline preload="auto"></video>
+          <video id="siteVid" src="site-mobile.mp4" muted playsinline preload="auto"></video>
           <div class="notch"></div>
           <div class="cam"></div>
         </div>
@@ -197,9 +197,9 @@ body{font-family:'Inter',sans-serif;color:#d2d2d2;-webkit-font-smoothing:antiali
 const FPS = 25, DUR = 28.0;
 const VIDEO_DUR = 28.0;
 
-// Camadas sobre o filme real do site (footage/site-strip.mp4 = 700 capturas, zoom 1.6, 860x1864):
-// a rolagem cobre a página inteira em 28 s (herói 0–2 s · sobre 2–7,5 s · projetos 7,5–11,5 s ·
-// etapas 11,5–27,5 s · orçamento e contato no fim). Um frame de vídeo por frame de reel (1:1).
+// Camadas sobre o filme real do site em MOBILE (footage/site-mobile.mp4 = 700 capturas,
+// viewport 390x844, sem zoom): a rolagem cobre a pagina inteira em 28 s, 1 frame de video
+// por frame de reel. O site aparece como o cliente ve no celular, cabendo na telinha.
 const LAYERS = [
   { num:'01', tag:'&lt;/<b>LCP</b>&gt;', title:'A primeira coisa na tela', desc:'Mede quanto tempo até o maior elemento da página aparecer. A meta do Google é <b>2,5 segundos</b> ou menos.',              t0:3.20, t1:6.80 },
   { num:'02', tag:'&lt;/<b>INP</b>&gt;', title:'A resposta ao toque',      desc:'Mede a latência entre o toque do cliente e a reação da página. A meta é <b>200 milissegundos</b> ou menos.',                  t0:6.80, t1:10.40 },

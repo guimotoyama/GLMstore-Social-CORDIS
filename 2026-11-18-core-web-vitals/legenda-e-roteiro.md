@@ -3,6 +3,7 @@
 **Formato:** Reel vertical 1080×1920 · 28 s · 25 fps · H.264 (yuv420p) · sem áudio
 **Data de publicação:** 18/11/2026
 **Tema:** Core Web Vitals — as 3 métricas de experiência que o Google usa para ranquear
+**Site gravado:** agencia.glmstore.com.br — **viewport mobile real 390×844** (sem zoom), rolagem contínua cobrindo a página inteira
 
 ---
 
@@ -58,7 +59,8 @@ Instrumental lo-fi/ambiente de baixa intensidade (90–100 BPM), sem vocais — 
 
 ## Check técnico
 
-- Movimento real confirmado por diferença de frames: 70% dos frames em movimento; nenhuma janela de 3 s abaixo de 1,8 (região do aparelho).
+- **Site em mobile real:** gravado em viewport 390×844, `deviceScaleFactor: 1`, sem zoom — o mesmo enquadramento que o cliente vê no celular. O site preenche 99,8% da largura da tela do aparelho em todos os frames amostrados (0, 175, 350, 525, 699), sem barra preta lateral.
+- Movimento real na região do aparelho: 44% dos frames com diferença > 1,8; rolagem contínua cobrindo a página inteira em 28 s.
 - Vídeo mudo por padrão (a faixa entra no app).
 - Sem oferta comercial no CTA — apenas convite neutro de contato.
 
