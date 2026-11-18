@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<style>
+@font-face{font-family:'SpaceGrotesk';src:url('fonts/SpaceGrotesk-400.ttf') format('truetype');font-weight:100 900}
+@font-face{font-family:'Inter';src:url('fonts/Inter-400.ttf') format('truetype');font-weight:100 900}
+@font-face{font-family:'B612Mono';src:url('fonts/B612Mono-400.woff2') format('woff2');font-weight:400}
+@font-face{font-family:'B612Mono';src:url('fonts/B612Mono-700.woff2') format('woff2');font-weight:700}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+body{font-family:'Inter',sans-serif;color:#d2d2d2;-webkit-font-smoothing:antialiased}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:#070708}
+
+/* ---------- studio background ---------- */
+.bg{position:absolute;inset:0;background:
+  radial-gradient(130% 80% at 50% 38%, #1b1a1c 0%, #121113 44%, #0a0a0b 74%, #060607 100%);}
+.grid{position:absolute;inset:0;opacity:.16;background-image:
+  linear-gradient(rgba(210,210,210,.09) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(210,210,210,.09) 1px, transparent 1px);
+  background-size:90px 90px;
+  -webkit-mask-image:radial-gradient(120% 85% at 50% 40%, #000 30%, transparent 88%);
+  mask-image:radial-gradient(120% 85% at 50% 40%, #000 30%, transparent 88%);}
+.grain{position:absolute;inset:0;opacity:.05;background-image:
+  repeating-linear-gradient(115deg, rgba(255,255,255,.10) 0 1px, transparent 1px 4px);}
+.vignette{position:absolute;inset:0;background:radial-gradient(120% 85% at 50% 45%, transparent 40%, rgba(0,0,0,.72) 100%)}
+
+/* ---------- screen glow ---------- */
+.spill{position:absolute;left:50%;top:53%;width:1150px;height:940px;transform:translate(-50%,-50%);
+  background:radial-gradient(ellipse at center, rgba(202,62,71,.38) 0%, rgba(202,62,71,.12) 34%, transparent 66%);
+  filter:blur(50px);opacity:0}
+.spill-warm{position:absolute;left:50%;top:54%;width:940px;height:1200px;transform:translate(-50%,-50%);
+  background:radial-gradient(ellipse at center, rgba(226,226,228,.22) 0%, rgba(226,226,228,.07) 45%, transparent 72%);
+  filter:blur(45px);opacity:0}
+
+/* ---------- scene ---------- */
+.scene{position:absolute;left:50%;top:0;width:1080px;height:1920px;transform-origin:50% 50%;
+  transform-style:preserve-3d;perspective:1700px;perspective-origin:50% 50%}
+
+/* phone */
+.phone{position:absolute;left:50%;top:460px;transform:translateX(-50%);transform-style:preserve-3d}
+.rail{position:absolute;background:linear-gradient(#3a3a3e,#17171a);border-radius:4px}
+.rail.left{left:-6px;top:172px;width:6px;height:86px}
+.rail.left2{left:-6px;top:285px;width:6px;height:134px}
+.rail.right{right:-6px;top:228px;width:6px;height:172px}
+.frame{position:relative;width:452px;height:938px;border-radius:44px;
+  background:linear-gradient(150deg,#333337,#131316 55%,#0b0b0d);
+  padding:18px;box-shadow:0 50px 100px rgba(0,0,0,.8), 0 0 0 1px rgba(255,255,255,.20) inset,
+    0 0 0 1px rgba(0,0,0,.6), 0 0 90px rgba(202,62,71,.28);
+  transform:rotateX(4deg) rotateY(-4deg);transform-style:preserve-3d}
+.screen{position:relative;width:416px;height:902px;border-radius:30px;overflow:hidden;background:#000;
+  box-shadow:0 0 0 1px rgba(255,255,255,.06)}
+.screen video{position:absolute;left:0;top:0;width:416px;height:902px;object-fit:cover;object-position:top center}
+.notch{position:absolute;left:50%;top:12px;transform:translateX(-50%);width:130px;height:26px;border-radius:13px;
+  background:#000;z-index:3;box-shadow:0 0 0 1px rgba(255,255,255,.05)}
+.cam{position:absolute;left:50%;top:19px;transform:translateX(-50%);width:10px;height:10px;border-radius:50%;
+  background:#0d1117;z-index:4;box-shadow:0 0 0 2px rgba(255,255,255,.06)}
+
+/* ---------- HUD ---------- */
+.hud{position:absolute;inset:0;z-index:5}
+.scrim-top{position:absolute;left:0;right:0;top:0;height:420px;
+  background:linear-gradient(180deg, rgba(7,7,8,.96) 0%, rgba(7,7,8,.82) 34%, rgba(7,7,8,.42) 62%, rgba(7,7,8,0) 100%);
+  opacity:0}
+.scrim-bottom{position:absolute;left:0;right:0;bottom:0;height:400px;
+  background:linear-gradient(0deg, rgba(7,7,8,.98) 0%, rgba(7,7,8,.84) 38%, rgba(7,7,8,.46) 68%, rgba(7,7,8,0) 100%);
+  opacity:0}
+
+.kicker{position:absolute;left:70px;top:92px;font-family:'B612Mono',monospace;font-size:20px;letter-spacing:.16em;
+  text-transform:uppercase;color:#ca3e47;display:flex;align-items:center;gap:14px;opacity:0}
+.kicker::after{content:'';width:120px;height:1px;background:#ca3e47;opacity:.55}
+.counter{position:absolute;right:70px;top:92px;font-family:'B612Mono',monospace;font-size:22px;letter-spacing:.16em;color:#b0b0b0;opacity:0}
+.counter b{color:#f5eded;font-weight:700}
+
+.headline{position:absolute;left:70px;top:158px;right:70px;font-family:'SpaceGrotesk',sans-serif;font-weight:700;
+  font-size:88px;line-height:1.02;color:#f5eded;opacity:0;letter-spacing:-.02em}
+.headline .hl{color:#ca3e47}
+.headline small{display:block;font-family:'Inter',sans-serif;font-weight:400;font-size:34px;line-height:1.34;
+  color:#c9c9c9;margin-top:22px;letter-spacing:0}
+
+/* code tag motif on cards */
+.card{position:absolute;left:70px;right:70px;top:1500px;opacity:0}
+.card-top{display:flex;align-items:center;gap:18px;margin-bottom:14px}
+.card-num{font-family:'B612Mono',monospace;font-size:28px;font-weight:700;color:#ca3e47;letter-spacing:.06em}
+.card-tag{font-family:'B612Mono',monospace;font-size:24px;color:#9b9b9b;letter-spacing:.02em}
+.card-tag b{color:#ca3e47;font-weight:700}
+.card-title{font-family:'SpaceGrotesk',sans-serif;font-weight:600;font-size:48px;color:#f5eded;letter-spacing:-.01em}
+.card-desc{font-size:32px;line-height:1.38;color:#e2e2e2;max-width:900px}
+.card-desc b{color:#f5eded;font-weight:600}
+
+/* summary stack */
+.summary{position:absolute;left:70px;right:70px;top:1500px;opacity:0;
+  background:linear-gradient(180deg, rgba(9,9,11,.92), rgba(9,9,11,.86));
+  border:1px solid rgba(255,255,255,.10);border-radius:22px;padding:18px 28px;
+  box-shadow:0 40px 90px rgba(0,0,0,.55)}
+.sum-item{display:flex;align-items:center;gap:14px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.12)}
+.sum-item:last-child{border-bottom:none}
+.sum-item span:first-child{font-family:'B612Mono',monospace;font-size:22px;font-weight:700;color:#ca3e47;width:40px}
+.sum-item span:nth-child(2){font-family:'SpaceGrotesk',sans-serif;font-weight:600;font-size:32px;color:#f5eded;flex:1}
+.sum-item span:last-child{font-family:'Inter',sans-serif;font-size:21px;color:#9b9b9b;text-align:right;max-width:360px}
+
+/* bottom brand bar */
+.brandbar{position:absolute;left:70px;right:70px;bottom:26px;display:flex;align-items:center;justify-content:space-between;opacity:0}
+.brandbar img{height:36px}
+.brandbar span{font-family:'B612Mono',monospace;font-size:20px;letter-spacing:.10em;color:#9b9b9b}
+
+/* end card */
+.end{position:absolute;inset:0;opacity:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.end::before{content:'';position:absolute;inset:-2%;z-index:-1;
+  background:radial-gradient(ellipse 82% 66% at 50% 46%, #0c0c0c 0%, #0c0c0c 66%, rgba(12,12,12,.97) 100%)}
+.end-logo{height:88px;margin-bottom:42px}
+.end h3{font-family:'SpaceGrotesk',sans-serif;font-weight:700;font-size:90px;color:#f5eded;line-height:1.05;letter-spacing:-.02em}
+.end h3 span{color:#ca3e47}
+.end p{font-size:34px;color:#c9c9c9;margin-top:22px;max-width:820px;line-height:1.4}
+.wa{display:inline-flex;align-items:center;gap:14px;margin-top:48px;padding:24px 44px;background:#ca3e47;
+  border-radius:14px;color:#f5eded;font-family:'SpaceGrotesk',sans-serif;font-weight:600;font-size:32px}
+.wa svg{width:32px;height:32px}
+.end-site{font-family:'B612Mono',monospace;font-size:26px;color:#c9c9c9;margin-top:26px;letter-spacing:.03em}
+
+/* progress */
+.progress{position:absolute;left:0;bottom:0;height:5px;background:#ca3e47;width:0;z-index:9}
+
+/* grain overlay */
+.grain2{position:absolute;inset:0;z-index:8;pointer-events:none;opacity:.035;background-image:
+  radial-gradient(rgba(255,255,255,.9) .5px, transparent .5px);background-size:3px 3px}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="bg"></div>
+  <div class="grid"></div>
+  <div class="spill" id="spill"></div>
+  <div class="spill-warm" id="spillWarm"></div>
+
+  <div class="scene" id="scene">
+    <div class="phone">
+      <div class="rail left"></div>
+      <div class="rail left2"></div>
+      <div class="rail right"></div>
+      <div class="frame">
+        <div class="screen" id="screen">
+          <video id="siteVid" src="site-strip.mp4" muted playsinline preload="auto"></video>
+          <div class="notch"></div>
+          <div class="cam"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hud">
+    <div class="scrim-top" id="scrimTop"></div>
+    <div class="scrim-bottom" id="scrimBottom"></div>
+    <div class="kicker" id="kicker">core web vitals · experiência de página</div>
+    <div class="counter" id="counter"><b>0</b> / 5</div>
+    <div class="headline" id="headline">
+      O Google mede<br>o seu site em <span class="hl">3 notas</span>.
+      <small>Quase metade dos sites reprova em uma delas.</small>
+    </div>
+
+    <div class="card" id="card">
+      <div class="card-top">
+        <span class="card-num" id="cardNum">01</span>
+        <span class="card-tag" id="cardTag">&lt;/<b>LCP</b>&gt;</span>
+        <span class="card-title" id="cardTitle"></span>
+      </div>
+      <div class="card-desc" id="cardDesc"></div>
+    </div>
+
+    <div class="summary" id="summary">
+      <div class="sum-item"><span>01</span><span>LCP</span><span>tempo até aparecer · 2,5 s</span></div>
+      <div class="sum-item"><span>02</span><span>INP</span><span>resposta ao toque · 200 ms</span></div>
+      <div class="sum-item"><span>03</span><span>CLS</span><span>estabilidade visual · 0,1</span></div>
+      <div class="sum-item"><span>04</span><span>Onde ver</span><span>Search Console</span></div>
+      <div class="sum-item"><span>05</span><span>Começar por</span><span>LCP primeiro</span></div>
+    </div>
+
+    <div class="brandbar" id="brandbar">
+      <img src="logo-glm.png" alt="GLM">
+      <span>@agencia_glmstore</span>
+    </div>
+
+    <div class="end" id="end">
+      <img class="end-logo" src="logo-glm.png" alt="GLM">
+      <h3>Seu site pode<br><span>ir além</span>.</h3>
+      <p>Fale com a gente e veja o que os números do seu <b>site</b> dizem.</p>
+      <div class="wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>(11) 98984-2541</div>
+      <div class="end-site">agencia.glmstore.com.br</div>
+    </div>
+  </div>
+
+  <div class="progress" id="progress"></div>
+  <div class="vignette"></div>
+  <div class="grain"></div>
+  <div class="grain2"></div>
+</div>
+
+<script>
+const FPS = 25, DUR = 28.0;
+const VIDEO_DUR = 28.0;
+
+// Camadas sobre o filme real do site (footage/site-strip.mp4 = 700 capturas, zoom 1.6, 860x1864):
+// a rolagem cobre a página inteira em 28 s (herói 0–2 s · sobre 2–7,5 s · projetos 7,5–11,5 s ·
+// etapas 11,5–27,5 s · orçamento e contato no fim). Um frame de vídeo por frame de reel (1:1).
+const LAYERS = [
+  { num:'01', tag:'&lt;/<b>LCP</b>&gt;', title:'A primeira coisa na tela', desc:'Mede quanto tempo até o maior elemento da página aparecer. A meta do Google é <b>2,5 segundos</b> ou menos.',              t0:3.20, t1:6.80 },
+  { num:'02', tag:'&lt;/<b>INP</b>&gt;', title:'A resposta ao toque',      desc:'Mede a latência entre o toque do cliente e a reação da página. A meta é <b>200 milissegundos</b> ou menos.',                  t0:6.80, t1:10.40 },
+  { num:'03', tag:'&lt;/<b>CLS</b>&gt;', title:'A estabilidade visual',    desc:'Mede o quanto os elementos se movem sozinhos enquanto a página carrega. A meta é <b>0,1</b> ou menos.',                            t0:10.40, t1:14.00 },
+  { num:'04', tag:'&lt;/<b>Search Console</b>&gt;', title:'Onde ver os seus números', desc:'O relatório <b>Core Web Vitals</b> do Search Console mostra os dados reais de visitas ao seu site.',                       t0:14.00, t1:17.60 },
+  { num:'05', tag:'&lt;/<b>Ordem</b>&gt;', title:'Por onde começar',       desc:'A maioria dos sites reprova no <b>LCP</b>. Comece por ele: imagem leve, servidor rápido, cache.',                                     t0:17.60, t1:21.20 }
+];
+
+// Tempo de vídeo (s) para cada tempo de reel (s)
+const VIDEO_KEYS = [
+  [0.0, 0.0], [28.0, 28.0]
+];
+
+const $ = id => document.getElementById(id);
+const el = {
+  scene:$('scene'), spill:$('spill'), spillWarm:$('spillWarm'),
+  scrimTop:$('scrimTop'), scrimBottom:$('scrimBottom'),
+  kicker:$('kicker'), counter:$('counter'), headline:$('headline'),
+  card:$('card'), cardNum:$('cardNum'), cardTag:$('cardTag'), cardTitle:$('cardTitle'), cardDesc:$('cardDesc'),
+  summary:$('summary'), brandbar:$('brandbar'),
+  end:$('end'), progress:$('progress'), vid:$('siteVid')
+};
+
+const clamp = (v,a,b) => Math.min(Math.max(v,a),b);
+const easeOut = x => 1 - Math.pow(1 - clamp(x,0,1), 3);
+const easeInOut = x => x < .5 ? 4*x*x*x : 1 - Math.pow(-2*x+2,3)/2;
+const seg = (t,t0,t1) => clamp((t-t0)/(t1-t0),0,1);
+
+function videoAt(t){
+  const K = VIDEO_KEYS;
+  for (let i=0;i<K.length-1;i++){
+    const [ta,va]=K[i], [tb,vb]=K[i+1];
+    if (t>=ta && t<=tb) return va + (vb-va)*seg(t,ta,tb);
+  }
+  return VIDEO_DUR;
+}
+
+function activeLayer(t){
+  let a = -1;
+  for (let i=0;i<LAYERS.length;i++){ const L=LAYERS[i]; if (t>=L.t0-0.05) a=i; }
+  return a;
+}
+
+window.renderFrame = function(t){
+  const p = t / DUR;
+  const act = activeLayer(t);
+
+  // ---- end card timing computed first (drives chrome fade-out) ----
+  const endIn = easeOut(seg(t,24.0,25.0));
+
+  // ---- headline / kicker ----
+  const hookIn  = easeOut(seg(t,0.10,0.90));
+  const hookOut = easeOut(seg(t,2.60,3.30));
+  el.headline.style.opacity = hookIn * (1-hookOut);
+  el.headline.style.transform = `translateY(${(1-hookIn)*46 - hookOut*30}px)`;
+
+  // ---- scene reveal (ghost pose during hook -> pulls back to reveal phone) ----
+  const sceneIn = easeOut(seg(t,1.50,3.30));
+  const endOut  = easeOut(seg(t,27.2,28.0));
+  const camPush = easeOut(seg(t,3.2,21.2));
+  const hookPose = 1 - easeOut(seg(t,1.10,3.20));
+  const baseScale = 0.96 + 0.04*easeOut(seg(t,2.20,4.20));
+  const scale = (baseScale + hookPose*0.16) * (1 + 0.032*camPush) * (1 - 0.10*easeOut(seg(t,21.2,24.0)));
+  const ty = hookPose*150 + easeOut(seg(t,21.2,24.0))*40 - endOut*140;
+  const rx = 4 - 2.4*camPush + endOut*6, ry = -4 + 2.2*camPush - endOut*4;
+  el.scene.style.opacity = (0.26 + 0.74*sceneIn) * (1-endOut);
+  el.scene.style.transform = `translateX(-50%) translateY(${ty}px) scale(${scale}) rotateX(${rx}deg) rotateY(${ry}deg)`;
+  el.spill.style.opacity = (0.20 + 0.70*sceneIn)*(1-endOut)*0.9;
+  el.spillWarm.style.opacity = (0.50 + 0.50*sceneIn)*(1-endOut);
+
+  // ---- scrims follow the chrome ----
+  el.scrimTop.style.opacity = (hookIn*(1-hookOut)*0.95 + (act>=0 ? easeOut(seg(t,3.3,4.1)) : 0)) * (1-endIn);
+  el.scrimBottom.style.opacity = (act>=0 ? easeOut(seg(t,3.4,4.2)) : 0) * (1-endIn);
+
+  // ---- site video inside the screen ----
+  const vt = videoAt(t);
+  if (Math.abs(el.vid.currentTime - vt) > 0.02) {
+    el.vid.currentTime = vt;
+  }
+
+  // ---- layers ----
+  const chromeAlpha = (act>=0 ? easeOut(seg(t,3.3,4.1)) : hookIn*(1-hookOut)*.95) * (1-endIn);
+  el.counter.style.opacity = act>=0 ? chromeAlpha : 0;
+  el.counter.innerHTML = `<b>${act>=0 ? act+1 : 0}</b> / 5`;
+  el.kicker.textContent = 'core web vitals · experiência de página';
+  el.kicker.style.opacity = chromeAlpha;
+
+  const cardAlpha = act>=0
+    ? Math.min(easeOut(seg(t,LAYERS[act].t0,LAYERS[act].t0+0.55)),
+               1-easeOut(seg(t,LAYERS[act].t1-0.45,LAYERS[act].t1)))
+    : 0;
+  if (act>=0){
+    const L = LAYERS[act];
+    el.cardNum.textContent = L.num;
+    el.cardTag.innerHTML = L.tag;
+    el.cardTitle.textContent = L.title;
+    el.cardDesc.innerHTML = L.desc;
+  }
+
+  // ---- summary ----
+  const sumIn  = easeOut(seg(t,21.30,22.10));
+  const sumOut = easeOut(seg(t,23.90,24.50));
+  el.summary.style.opacity = sumIn*(1-sumOut);
+  el.summary.style.transform = `translateY(${(1-sumIn)*40 - sumOut*40}px)`;
+  el.summary.querySelectorAll('.sum-item').forEach((row,i)=>{
+    const a = easeOut(seg(t,21.40+i*0.15,21.95+i*0.15));
+    row.style.opacity = a; row.style.transform=`translateX(${(1-a)*40}px)`;
+  });
+  const cardVisible = act>=0 ? Math.min(cardAlpha, 1-sumIn) : 0;
+  el.card.style.opacity = cardVisible;
+  el.card.style.transform = `translateY(${(1-cardVisible)*34}px)`;
+
+  // ---- bottom brand bar (layer beats only) ----
+  const bb = Math.min(easeOut(seg(t,3.4,4.2)), 1-sumIn) * (1-endIn);
+  el.brandbar.style.opacity = bb;
+
+  // ---- end card ----
+  el.end.style.opacity = endIn;
+  el.end.style.transform = `translateY(${(1-endIn)*40}px) scale(${0.96+0.04*endIn})`;
+
+  // ---- progress ----
+  el.progress.style.width = (p*100) + '%';
+
+  return vt;   // caller uses this to seek the video deterministically
+};
+</script>
+</body>
+</html>
