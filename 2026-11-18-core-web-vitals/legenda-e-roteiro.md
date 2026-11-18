@@ -32,22 +32,73 @@ A maioria dos sites reprova no LCP. Comece por ele: imagem leve, servidor rápid
 
 ---
 
-## Legenda
+## A legenda (colar no Instagram)
 
-O Google mede o seu site em 3 notas. Quase metade dos sites reprova em uma delas.
-• LCP — tempo até a primeira coisa aparecer: 2,5 s
-• INP — tempo de resposta ao toque: 200 ms
-• CLS — o quanto a página se mexe ao carregar: 0,1
-Os números do seu site estão no Search Console. Fale com a gente para entender o que eles dizem.
+O Google mede o seu site em 3 notas. E quase metade dos sites reprova em pelo menos uma.
+
+LCP · INP · CLS — três siglas que decidem se o cliente espera a página abrir ou sai andando.
+
+Os números do seu site já existem: estão no Search Console, com dados reais de visitas. A gente lê eles com você e mostra por onde começar.
+
+Salve este post para consultar as metas depois e fale com a gente para entender o que os seus números dizem.
+
 GLMstore — cuidamos da sua presença digital com autoridade.
 
-## Hashtags
+---
 
-#corewebvitals · #desenvolvimentoweb · #performanceweb · #seo · #agencia_glmstore
+## Por que essa legenda funciona
 
-## Música sugerida
+Estrutura em cinco partes, cada bloco com uma função:
 
-Instrumental lo-fi/ambiente de baixa intensidade (90–100 BPM), sem vocais — não compete com o texto e mantém o Reel elegível à aba de áudio. Adicionar pelo seletor de música do Instagram (Coleção de Música Comercial). Cortes nas trocas de camada (3,2 s · 6,8 s · 10,4 s · 14,0 s · 17,6 s · 21,3 s · 24,8 s), alinhados ao tempo mais próximo da faixa.
+1. **Gancho repetido** — reabre a promessa do vídeo nos primeiros 2 segundos de leitura, antes do "mais".
+2. **Curiosidade técnica** — as três siglas + a consequência (o cliente sai andando). É o motivo de continuar lendo.
+3. **Autoridade** — mostra onde os dados estão (Search Console) e que a gente os interpreta. Nada de "a gente faz site bonito".
+4. **CTA duplo** — `salve` (salvamento é sinal de distribuição no Reels) + convite neutro de contato. Sem oferta, sem desconto, sem "comece agora".
+5. **Assinatura** — a tagline da marca, que fixa posicionamento.
+
+**O que estava errado na legenda anterior:**
+- Usava `<br>` entre as linhas. O Instagram **não** entende HTML na legenda — tudo virava um bloco único, ilegível no celular.
+- Não tinha CTA: terminava em "Fale com a gente para entender o que eles dizem", sem pedido de ação concreto e sem salvamento.
+- Tom de lista técnica, sem gancho de retenção.
+
+**Regra que passa a valer:** legenda sempre em texto puro, com quebras de linha reais, e sempre com CTA (salvar + convite neutro de contato).
+
+---
+
+## Hashtags — as 5, pesquisadas em 18/11/2026
+
+`#corewebvitals` `#webperformance` `#seo` `#desenvolvimentoweb` `#agencia_glmstore`
+
+| Hashtag | Volume de posts | Papel no set |
+|---|---|---|
+| `#corewebvitals` | nicho (baixo volume) | precisão total — é exatamente o tema |
+| `#webperformance` | 1.577 posts | termo técnico de nicho, baixa competição |
+| `#seo` | 12,9 mi posts · 148/hora | alcance amplo, audiência que decide site |
+| `#desenvolvimentoweb` | 55.964 posts | termo brasileiro do nicho |
+| `#agencia_glmstore` | marca | identidade e arquivo próprio |
+
+**O que mudou e por quê:**
+- `#performanceweb` saiu — **não existe como hashtag** (a ferramenta de volume não a encontra). Era o erro real do set anterior.
+- `#webperformance` entrou no lugar: termo técnico real, 1.577 posts, baixa competição — e é a hashtag que os posts sobre Core Web Vitals de fato usam.
+- `#seo` ficou: volume e frequência reais (148 posts/hora).
+- `#desenvolvimentoweb` ficou: 55.964 posts, termo brasileiro do nicho.
+- `#agencia_glmstore` ficou: é a marca, não é hashtag de descoberta — existe para arquivo.
+
+**Regra que passa a valer:** as 5 hashtags são pesquisadas no dia, com volume conferido, e nenhum set se repete inteiro entre posts.
+
+---
+
+## Música — o que o vídeo já entrega
+
+O vídeo sai **mudo** de propósito: a música é adicionada no app do Instagram, onde está o catálogo em alta (Coleção de Música Comercial).
+
+**Tempos de corte/transição do vídeo** (para casar com a batida):
+
+`3,2 s · 6,8 s · 10,4 s · 14,0 s · 17,6 s · 21,3 s · 24,8 s`
+
+São as trocas de camada. Ao escolher a faixa, arraste o seletor para começar num downbeat e alinhe o primeiro corte (3,2 s) com uma batida — o Instagram marca os beats na linha do tempo.
+
+**Por que não embutir a música no arquivo:** faixa em alta no Instagram não tem licença para ser gravada no MP4. Adicionando no app, o post aparece como "música em alta", o que favorece a distribuição.
 
 ## Checklist pré-publicação
 
