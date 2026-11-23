@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Reel GLMstore · Imagens pesadas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=B612+Mono&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0f0f0f; --txt:#d2d2d2; --white:#f5eded; --accent:#ca3e47;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;background:var(--bg);}
+body{width:1080px;height:1920px;overflow:hidden;font-family:'Inter',sans-serif;color:var(--txt);}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:
+  radial-gradient(1200px 700px at 50% 34%, rgba(202,62,71,.16), rgba(15,15,15,0) 62%),
+  var(--bg);}
+/* ---------- top band ---------- */
+#topband{position:absolute;left:0;top:0;width:1080px;height:470px;padding:56px 72px 0 72px;}
+#kicker{font-family:'B612 Mono',monospace;font-size:26px;letter-spacing:.34em;color:var(--accent);text-transform:uppercase;margin-bottom:22px;}
+#kicker .dot{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--accent);margin-right:18px;vertical-align:middle;}
+#headline{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:78px;line-height:1.02;color:var(--white);letter-spacing:-.015em;margin:0;}
+#headline em{font-style:normal;color:var(--accent);}
+#counter{font-family:'B612 Mono',monospace;font-size:28px;letter-spacing:.22em;color:var(--txt);margin-top:26px;opacity:.9;}
+/* ---------- device ---------- */
+#device{position:absolute;left:284px;top:445px;width:513px;height:1080px;}
+#device .frame{position:absolute;inset:0;border-radius:44px;background:#1b1b1b;border:3px solid #2a2a2a;box-shadow:0 40px 90px rgba(0,0,0,.62), inset 0 0 0 2px #050505;}
+#device .notch{position:absolute;left:50%;top:16px;transform:translateX(-50%);width:150px;height:30px;background:#050505;border-radius:18px;z-index:5;}
+#screen{position:absolute;left:13px;top:13px;width:487px;height:1054px;overflow:hidden;border-radius:33px;background:#000;}
+#strip{filter:brightness(1.18) contrast(1.03);}
+#strip{display:flex;flex-direction:column;will-change:transform;}
+#strip img{width:487px;height:1054px;display:block;}
+#spill{position:absolute;left:50%;top:460px;width:900px;height:900px;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(202,62,71,.20),rgba(15,15,15,0) 62%);pointer-events:none;z-index:2;}
+/* ---------- bottom band ---------- */
+#bottomband{position:absolute;left:0;top:1555px;width:1080px;height:300px;padding:0 72px;}
+.card{position:absolute;left:72px;right:72px;top:0;height:260px;border-radius:22px;background:rgba(24,24,24,.92);border:1px solid #2c2c2c;padding:28px 36px;backdrop-filter:blur(6px);}
+.card h3{font-family:'Space Grotesk',sans-serif;font-size:44px;font-weight:700;color:var(--white);margin:0 0 12px 0;line-height:1.05;}
+.card h3 span{color:var(--accent);}
+.card p{font-size:29px;line-height:1.32;color:var(--txt);margin:0;}
+.card p b{color:var(--white);font-weight:600;}
+.card .tag{font-family:'B612 Mono',monospace;font-size:22px;letter-spacing:.2em;color:var(--accent);display:block;margin-bottom:14px;text-transform:uppercase;}
+#endcard{position:absolute;left:72px;right:72px;top:0;height:260px;border-radius:22px;background:rgba(15,15,15,.96);border:1px solid #2c2c2c;padding:28px 36px;}
+#endcard h3{font-family:'Space Grotesk',sans-serif;font-size:42px;font-weight:700;color:var(--white);margin:0 0 10px 0;line-height:1.06;}
+#endcard p{font-size:27px;line-height:1.3;color:var(--txt);margin:0;}
+#brandbar{position:absolute;left:72px;right:72px;top:272px;height:34px;display:flex;align-items:center;justify-content:space-between;}
+#brandbar .name{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;color:var(--white);letter-spacing:.04em;}
+#brandbar .tag{font-size:21px;color:#8d8d8d;}
+#progress{position:absolute;left:0;bottom:0;width:1080px;height:8px;background:#242424;}
+#progress .fill{height:8px;width:0;background:var(--accent);}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="spill"></div>
+
+  <div id="topband">
+    <div id="kicker"><span class="dot"></span>GLMSTORE · WEB</div>
+    <h1 id="headline">Seu site não é lento por causa da <em>hospedagem</em>.</h1>
+    <div id="counter">ERRO 01 / 03</div>
+  </div>
+
+  <div id="device">
+    <div class="frame"></div>
+    <div id="screen"><div id="strip"></div></div>
+    <div class="notch"></div>
+  </div>
+
+  <div id="bottomband">
+    <div class="card" id="card1">
+      <span class="tag">Erro 01 · Tamanho errado</span>
+      <h3>A imagem servida é <span>grande demais</span> para o espaço que ocupa.</h3>
+      <p>Um JPEG de <b>156 KB</b> para um card de <b>350 px</b> de largura: o visitante baixa cinco vezes mais do que precisa.</p>
+    </div>
+    <div class="card" id="card2" style="opacity:0">
+      <span class="tag">Erro 02 · Carregamento preguiçoso</span>
+      <h3><span>Adiar</span> a foto principal atrasa a primeira impressão.</h3>
+      <p>A imagem que decide a visita tem que chegar <b>primeiro</b> — não depois do texto.</p>
+    </div>
+    <div class="card" id="card3" style="opacity:0">
+      <span class="tag">Erro 03 · Sem dimensão declarada</span>
+      <h3>Sem <span>width</span> e <span>height</span>, a página pula enquanto carrega.</h3>
+      <p>O navegador não reserva o espaço e o conteúdo <b>desaba no meio da leitura</b>.</p>
+    </div>
+    <div id="endcard" style="opacity:0">
+      <h3>Meça antes de trocar de hospedagem.</h3>
+      <p>Três verificações resolvem a maioria dos casos.</p>
+      <p style="margin-top:8px;color:#f5eded;font-weight:600">Fale com a gente · agencia.glmstore.com.br</p>
+    </div>
+    <div id="brandbar">
+      <span class="name">GLMSTORE</span>
+      <span class="tag">Cuidamos da sua presença digital com autoridade.</span>
+    </div>
+    <div id="progress"><div class="fill" id="pfill"></div></div>
+  </div>
+</div>
+<script>
+const CFG = window.CFG || {};
+const FPS = CFG.fps || 30;
+const DUR = CFG.dur || 24.567;
+const TOTAL = CFG.total || 737;
+const strip = document.getElementById('strip');
+let frames = [];
+
+function buildStrip(){
+  strip.innerHTML = '';
+  for (let i=0;i<frames.length;i++){
+    const im = document.createElement('img');
+    im.src = frames[i];
+    im.alt = '';
+    strip.appendChild(im);
+  }
+}
+window.setFrames = function(list){ frames = list; buildStrip(); };
+
+/* timeline em segundos */
+const TL = [
+  {k:'card1', t0: 3.2, t1: 8.8},
+  {k:'card2', t0: 8.8, t1: 14.2},
+  {k:'card3', t0:14.2, t1:19.6},
+  {k:'endcard', t0:19.6, t1:24.567},
+];
+const FADE = 0.28;
+
+function ease(x){ return x<0?0:x>1?1:x*x*(3-2*x); }
+
+function cardOpacity(t, it){
+  const a = ease((t - it.t0)/FADE);
+  const b = 1 - ease((t - (it.t1 - FADE))/FADE);
+  return Math.min(a,b);
+}
+
+window.renderFrame = function(t){
+  // scroll: cobre toda a pagina ao longo do video
+  const f = Math.min(0.99999, Math.max(0, t/DUR)) * (frames.length - 1);
+  const idx = Math.floor(f);
+  strip.style.transform = 'translate3d(0,' + (-idx*1054).toFixed(2) + 'px,0)';
+  // progress
+  document.getElementById('pfill').style.width = (Math.min(1,t/DUR)*100).toFixed(2) + '%';
+  // cards
+  for (const it of TL){
+    document.getElementById(it.k).style.opacity = cardOpacity(t,it).toFixed(3);
+  }
+  // counter por bloco
+  const c = t < 3.2 ? 'ERRO 01 / 03' : t < 8.8 ? 'ERRO 01 / 03' : t < 14.2 ? 'ERRO 02 / 03' : t < 19.6 ? 'ERRO 03 / 03' : 'RESUMO';
+  document.getElementById('counter').textContent = c;
+  // headline some no fim
+  document.getElementById('headline').style.opacity = (1 - ease((t-19.6)/0.5)).toFixed(3);
+  document.getElementById('kicker').style.opacity = (1 - ease((t-19.6)/0.5)).toFixed(3);
+};
+</script>
+</body>
+</html>
