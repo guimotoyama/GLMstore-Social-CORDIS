@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;800&family=Inter:wght@400;500;600;800&family=B612+Mono&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#0f0f0f;color:#d2d2d2;font-family:Inter,Arial,sans-serif}
+#grid{position:absolute;inset:0;opacity:.16;background-image:linear-gradient(#2a2a2a 1px,transparent 1px),linear-gradient(90deg,#2a2a2a 1px,transparent 1px);background-size:90px 90px}
+#glow{position:absolute;left:-260px;top:120px;width:1600px;height:1500px;background:radial-gradient(circle,rgba(202,62,71,.20),transparent 62%);pointer-events:none}
+.mono{font-family:'B612 Mono',monospace}
+.kick{position:absolute;left:64px;top:62px;font-size:25px;letter-spacing:5px;color:#ca3e47}
+#headline{position:absolute;left:64px;top:112px;width:950px;font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:76px;line-height:1.04;color:#f5eded}
+#counter{position:absolute;right:60px;top:62px;font-size:26px;color:#8a8a8a;letter-spacing:1px}
+#stage{position:absolute;left:0;top:430px;width:1080px;height:1060px}
+.panel{position:absolute;top:20px;width:452px;height:880px;border-radius:24px;overflow:hidden;background:#f0f0f0;box-shadow:0 34px 90px rgba(0,0,0,.7);transform-origin:50% 50%}
+#pL{left:52px}
+#pR{left:576px}
+.bar{height:66px;background:#fff;display:flex;align-items:center;gap:9px;padding:0 20px;border-bottom:1px solid rgba(0,0,0,.08)}
+.dot{width:13px;height:13px;border-radius:50%;background:#c6c6c6}
+.url{margin-left:14px;font-size:19px;color:#999;flex:1}
+.inner{padding:36px 30px}
+.tag{display:inline-block;font-size:18px;letter-spacing:2px;padding:9px 15px;border-radius:8px;font-family:'B612 Mono',monospace}
+.tit{font-family:'Space Grotesk',sans-serif;font-size:43px;line-height:1.1;font-weight:800;margin-top:28px}
+.par{font-size:25px;line-height:1.45;margin-top:22px}
+.btn{display:inline-block;margin-top:34px;padding:19px 30px;border-radius:12px;font-size:24px;font-weight:800}
+.ratio{position:absolute;right:18px;bottom:18px;font-family:'B612 Mono',monospace;font-size:22px;padding:10px 14px;border-radius:8px}
+#vs{position:absolute;left:508px;top:400px;width:64px;height:64px;border-radius:50%;background:#ca3e47;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:23px;box-shadow:0 0 40px rgba(202,62,71,.55)}
+#scan{position:absolute;left:52px;top:20px;width:976px;height:880px;background:linear-gradient(to bottom,transparent 0%,rgba(242,242,242,.10) 50%,transparent 100%);opacity:0;pointer-events:none}
+#lens{position:absolute;width:230px;height:230px;border:5px solid #ca3e47;border-radius:50%;box-shadow:0 0 0 9999px rgba(15,15,15,.60),0 0 50px rgba(202,62,71,.45);opacity:0;pointer-events:none;overflow:hidden;background:rgba(245,237,237,.94)}
+#lens div{position:absolute;left:-160px;top:-90px;font-family:'Space Grotesk',sans-serif;font-size:43px;font-weight:800;color:#0f0f0f;width:520px;line-height:1.1}
+#cursor{position:absolute;width:0;height:0;opacity:0;border-left:17px solid transparent;border-right:17px solid transparent;border-bottom:30px solid #f5eded;filter:drop-shadow(0 3px 5px rgba(0,0,0,.8))}
+#altcard{position:absolute;left:576px;top:700px;width:452px;background:#0f0f0f;border:2px solid #ca3e47;border-radius:14px;padding:16px 18px;opacity:0}
+#altcard .t{font-family:'B612 Mono',monospace;font-size:17px;color:#ca3e47}
+#altcard .d{font-size:20px;color:#f5eded;margin-top:6px}
+#bottom{position:absolute;left:0;top:1520px;width:1080px;height:380px;padding:0 64px}
+.card{position:absolute;left:64px;width:952px;height:88px;border-radius:14px;background:#1a1a1a;border-left:7px solid #ca3e47;display:flex;align-items:center;gap:22px;padding:0 24px;opacity:0}
+.card .num{font-family:'B612 Mono',monospace;font-size:26px;color:#ca3e47}
+.card .tx{font-size:28px;color:#f5eded;font-weight:600}
+#brand{position:absolute;left:64px;bottom:44px;font-size:21px;color:#777;letter-spacing:1px}
+#end{position:absolute;inset:0;background:radial-gradient(circle at 50% 42%,#241316 0%,#0f0f0f 62%);opacity:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 90px}
+#end .e1{font-family:'B612 Mono',monospace;font-size:26px;letter-spacing:4px;color:#ca3e47}
+#end .e2{font-family:'Space Grotesk',sans-serif;font-size:82px;font-weight:800;line-height:1.06;color:#f5eded;margin-top:38px}
+#end .e3{font-size:33px;color:#d2d2d2;margin-top:40px}
+#end .e4{margin-top:56px;padding:24px 46px;border-radius:16px;background:#ca3e47;color:#fff;font-size:32px;font-weight:800}
+#end .e5{margin-top:50px;font-size:27px;color:#f5eded}
+#end .e6{margin-top:24px;font-size:21px;color:#888}
+#prog{position:absolute;left:0;bottom:0;width:1080px;height:11px;background:#262626}
+#fill{height:100%;width:0;background:#ca3e47}
+#flash{position:absolute;inset:0;background:#f5eded;opacity:0;pointer-events:none}
+#beam{position:absolute;left:-320px;top:0;width:320px;height:1920px;background:linear-gradient(90deg,transparent,rgba(202,62,71,.17),rgba(245,237,237,.10),transparent);opacity:0;pointer-events:none}
+.ring{position:absolute;left:50%;top:1180px;width:330px;height:100px;margin-left:-165px;border:2px solid #ca3e47;border-radius:18px;opacity:0;pointer-events:none}
+#lineA,#lineB{position:absolute;left:0;width:1080px;height:2px;background:linear-gradient(90deg,transparent,#ca3e47,transparent);opacity:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div id="grid"></div><div id="glow"></div>
+<div class="kick mono">ACESSIBILIDADE DIGITAL</div>
+<div id="counter" class="mono">01 / 03</div>
+<div id="headline">Seu site exclui gente<br>sem você perceber.</div>
+<div id="stage">
+  <div class="panel" id="pL">
+    <div class="bar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><span class="url">seusite.com.br</span></div>
+    <div class="inner"><span class="tag" id="tagL">ANTES</span><div class="tit" id="titL">Chegou até aqui?</div><div class="par" id="parL">O texto some no fundo claro. Quem tem baixa visão não consegue ler.</div><div class="btn" id="btnL">Saiba mais</div></div>
+    <div class="ratio" id="ratioL">2.1 : 1</div>
+  </div>
+  <div class="panel" id="pR">
+    <div class="bar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><span class="url">seusite.com.br</span></div>
+    <div class="inner"><span class="tag" id="tagR">DEPOIS</span><div class="tit" id="titR">Chegou até aqui?</div><div class="par" id="parR">O texto some no fundo claro. Quem tem baixa visão não consegue ler.</div><div class="btn" id="btnR">Saiba mais</div></div>
+    <div class="ratio" id="ratioR">7.8 : 1</div>
+  </div>
+  <div id="vs">VS</div>
+  <div id="scan"></div>
+  <div id="lens"><div>Chegou até aqui?</div></div>
+  <div id="cursor"></div>
+  <div id="altcard"><div class="t">ALT / TEXTO ALTERNATIVO</div><div class="d">Descreva a imagem para quem não a vê.</div></div>
+</div>
+<div id="bottom">
+  <div class="card" id="c1"><span class="num">01</span><span class="tx">Contraste mínimo de 4.5:1 no texto</span></div>
+  <div class="card" id="c2"><span class="num">02</span><span class="tx">Navegação completa por teclado</span></div>
+  <div class="card" id="c3"><span class="num">03</span><span class="tx">Texto alternativo nas imagens</span></div>
+  <div id="brand" class="mono">GLMstore · Cuidamos da sua presença digital com autoridade.</div>
+</div>
+<div id="end">
+  <div class="e1">FIM DO "DEPOIS QUE DÁ"</div>
+  <div class="e2">Acessibilidade é parte<br>do seu site funcionar.</div>
+  <div class="e3">Fale com a gente. A gente olha o seu site.</div>
+  <div class="e4">Fale com a gente →</div>
+  <div class="e5">@agencia_glmstore</div>
+  <div class="e6">GLMstore · Cuidamos da sua presença digital com autoridade.</div>
+</div>
+<div class="ring" id="ringA"></div>
+<div class="ring" id="ringB"></div>
+<div id="beam"></div>
+<div id="lineA"></div><div id="lineB"></div>
+<div id="flash"></div>
+<div id="prog"><div id="fill"></div></div>
+<script>
+const $=id=>document.getElementById(id);
+const HEAD=[
+ "Seu site exclui gente<br>sem você perceber.",
+ "Contraste: 2.1:1<br>contra 7.8:1.",
+ "Se o texto não lê,<br>o clique não vem.",
+ "Tab, Enter, seta.<br>Sem mouse também dá.",
+ "Imagem sem texto<br>é imagem invisível.",
+ "42 para 98<br>no Lighthouse."
+];
+const TIT=["Chegou até aqui?","Leia esta frase.","O botão está aqui.","Vá para o botão.","Uma imagem important","Nota do seu site"];
+const PAR=[
+ "O texto some no fundo claro. Quem tem baixa visão não consegue ler.",
+ "Mesma frase, fundo escuro. Agora qualquer pessoa lê em um segundo.",
+ "Botão pequeno e cinza some. Foco invisível trava quem navega por teclado.",
+ "A tecla Tab percorre os elementos. O foco aparece. O caminho fica claro.",
+ "Sem texto alternativo, o leitor de tela só diz: imagem. E a informação some.",
+ "Acessibilidade não custa o design. Só exige critério na hora de construir."
+];
+const BTN=["Saiba mais","Saiba mais","Enviar","Enviar","Ver imagem","Ver mais"];
+const CUT=[0,2.15,4.75,8.75,13.05,17.65,22.70];
+const DUR=26;
+function sstep(a,b,x){const t=Math.max(0,Math.min(1,(x-a)/(b-a)));return t*t*(3-2*t)}
+function scene(t){let i=0;for(let k=0;k<CUT.length;k++)if(t>=CUT[k])i=k;return Math.min(i,6)}
+window.renderFrame=function(t){
+  const sc=scene(t), st=t-CUT[sc], dur=CUT[sc+1]===undefined?DUR:CUT[sc+1], p=Math.max(0,Math.min(1,st/(dur-st+st)));
+  const prog=Math.max(0,Math.min(1,t/DUR));
+  $('fill').style.width=(prog*100)+'%';
+  $('headline').innerHTML=HEAD[sc];
+  $('counter').textContent=String(sc+1).padStart(2,'0')+' / 06';
+  // painéis: entrada + respiro continuo
+  const intro=sstep(0,1.0,t);
+  const breathe=Math.sin(t*1.7)*7;
+  $('pL').style.transform='translate('+((-1+intro)*640+breathe)+'px,'+((1-intro)*120)+'px) rotateY('+(intro*7-4+Math.sin(t*.9)*2)+'deg) scale('+(0.84+intro*.16)+')';
+  $('pR').style.transform='translate('+((1-intro)*640-breathe)+'px,'+((1-intro)*120)+'px) rotateY('+(-intro*7+4-Math.sin(t*.9)*2)+'deg) scale('+(0.84+intro*.16)+')';
+  // estilos dos painéis por cena
+  const dark = sc!==0;
+  $('pL').style.background = sc===0?'#e6e6e6':'#e6e6e6';
+  $('pR').style.background = sc===0?'#e6e6e6':'#111';
+  ['L','R'].forEach(side=>{
+    const darkSide = side==='R' && dark;
+    $('tag'+side).style.background=darkSide?'#ca3e47':'#cfcfcf';
+    $('tag'+side).style.color=darkSide?'#fff':'#7d7d7d';
+    $('tit'+side).style.color=darkSide?'#f5eded':'#bdbdbd';
+    $('par'+side).style.color=darkSide?'#d2d2d2':'#c4c4c4';
+    $('btn'+side).style.background=darkSide?'#ca3e47':'#d5d5d5';
+    $('btn'+side).style.color=darkSide?'#fff':'#f2f2f2';
+    $('ratio'+side).style.background=darkSide?'#3a0f14':'#d6d6d6';
+    $('ratio'+side).style.color=darkSide?'#ff8a92':'#7a7a7a';
+    $('tit'+side).textContent=TIT[sc];
+    $('par'+side).textContent=PAR[sc];
+    $('btn'+side).textContent=BTN[sc];
+  });
+  $('ratioL').textContent = sc===0?'2.1 : 1':(sc===5?'—':'2.1 : 1');
+  $('ratioR').textContent = sc===0?'7.8 : 1':(sc===5?'98 / 100':'7.8 : 1');
+  // scanline na troca de cena
+  $('scan').style.opacity = st<0.45 ? (1-st/0.45)*0.9 : 0;
+  $('scan').style.transform='translateY('+(st*1900)+'px)';
+  $('vs').style.opacity = sc<5?1:0;
+  $('vs').style.transform='scale('+(1+Math.sin(t*2.6)*.06)+')';
+  // lupa (cena 2)
+  $('lens').style.opacity = sc===2 ? (sstep(4.75,5.4,t)*(1-sstep(8.2,8.7,t))) : 0;
+  $('lens').style.left=(150+Math.sin(t*1.4)*110)+'px';
+  $('lens').style.top=(600+Math.cos(t*1.1)*80)+'px';
+  // cursor / foco (cena 3)
+  const cp=sc===3?sstep(8.75,12.6,t):0;
+  $('cursor').style.opacity=sc===3?1:0;
+  $('cursor').style.left=(610+cp*360)+'px';
+  $('cursor').style.top=(700+Math.sin(cp*8)*190)+'px';
+  $('pR').style.boxShadow = sc===3 ? '0 0 0 7px #ca3e47,0 34px 90px rgba(0,0,0,.7)' : '0 34px 90px rgba(0,0,0,.7)';
+  // cartao alt (cena 4)
+  $('altcard').style.opacity = sc===4 ? sstep(13.05,14.1,t)*(1-sstep(17.1,17.6,t)) : 0;
+  $('altcard').style.transform='translateY('+((1-sstep(13.05,14.1,t))*60)+'px)';
+  // cartoes inferiores: entram escalonados
+  [1,2,3].forEach((n,i)=>{
+    const el=$('c'+n);
+    const onset=0.6+i*2.4;
+    el.style.opacity = t<22.7 ? sstep(onset,onset+.55,t) : 0;
+    el.style.top=(1528+i*96)+'px';
+    el.style.transform='translateX('+((1-sstep(onset,onset+.6,t))*-90)+'px)';
+  });
+  $('brand').style.opacity=t<22.7?1:0;
+  // end card
+  const eo=sstep(22.70,23.5,t);
+  $('end').style.opacity=eo;
+  $('end').style.transform='translateY('+(Math.sin(t*2.2)*13)+'px) scale('+(0.94+eo*.06+Math.sin(t*1.5)*.008)+')';
+  // clarao de corte
+  $('flash').style.opacity = sc>0 && st<0.14 ? (1-st/0.14)*0.28 : 0;
+  // varredura de luz nas cenas de teclado/alt e no end card
+  const bc=((t/(sc===6?2.2:3.2))%1);
+  $('beam').style.transform='translateX('+(bc*1580)+'px)';
+  $('beam').style.opacity=(sc===3||sc===4||sc===5||sc===6)?1:0;
+  // linhas de luz no end card
+  const l1=(t*0.32)%1, l2=((t*0.32)+0.5)%1;
+  $('lineA').style.top=(l1*1920)+'px';
+  $('lineA').style.opacity=sc===6?0.55:0;
+  $('lineB').style.top=(l2*1920)+'px';
+  $('lineB').style.opacity=sc===6?0.4:0;
+  // anéis pulsantes ao redor do CTA no end card
+  if(sc===6){
+    const p1=(t*0.55)%1, p2=((t*0.55)+0.5)%1;
+    $('ringA').style.opacity=(1-p1)*0.75;
+    $('ringA').style.transform='scale('+(1+p1*0.5)+')';
+    $('ringB').style.opacity=(1-p2)*0.5;
+    $('ringB').style.transform='scale('+(1+p2*0.5)+')';
+  } else {
+    $('ringA').style.opacity=0; $('ringB').style.opacity=0;
+  }
+};
+window.CUT=CUT; window.DUR=DUR;
+window.renderFrame(0);
+</script>
+</body>
+</html>
